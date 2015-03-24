@@ -1,0 +1,14 @@
+[main]
+host = https://www.transifex.com
+
+[taiga-back.main]
+file_filter = locale/<lang>/LC_MESSAGES/django.po
+source_file = locale/en/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[taiga-back.taiga]
+file_filter = taiga/locale/<lang>/LC_MESSAGES/django.po
+source_file = taiga/locale/en/LC_MESSAGES/django.po
+source_lang = en
+type = PO
