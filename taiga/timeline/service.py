@@ -37,21 +37,17 @@ def _get_impl_key_from_typename(typename:str, event_type:str):
     raise Exception("Not valid typename parameter")
 
 
-def _get_class_implementation(model:Model, event_type:str):
-    key = _get_impl_key_from_model(model, event_type)
-    return _timeline_impl_map.get(key, None)
-
-
 def _add_to_object_timeline(obj:object, instance:object, event_type:str, namespace:str="default", extra_data:dict={}):
     assert isinstance(obj, Model), "obj must be a instance of Model"
     assert isinstance(instance, Model), "instance must be a instance of Model"
     from .models import Timeline
+    event_type_key = _get_impl_key_from_model(instance.__class__, event_type)
+    impl = _timeline_impl_map.get(event_type_key, None)
 
-    impl = _get_class_implementation(instance.__class__, event_type)
     Timeline.objects.create(
         content_object=obj,
         namespace=namespace,
-        event_type=event_type,
+        event_type=event_type_key,
         data=impl(instance, extra_data=extra_data)
     )
 

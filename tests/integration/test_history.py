@@ -225,7 +225,8 @@ def test_delete_comment_by_project_owner(client):
     key = make_key_from_model_object(us)
     history_entry = f.HistoryEntryFactory.create(type=HistoryType.change,
                                                  comment="testing",
-                                                 key=key)
+                                                 key=key,
+                                                 diff={})
 
     client.login(project.owner)
     url = reverse("userstory-history-delete-comment", args=(us.id,))

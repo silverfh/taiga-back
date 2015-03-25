@@ -319,6 +319,11 @@ def take_snapshot(obj:object, *, comment:str="", user=None, delete:bool=False):
         else:
             is_hidden = is_hidden_snapshot(fdiff)
 
+        if typename == "projects.project":
+            project = obj
+        else:
+            project = obj.project
+
         kwargs = {
             "user": {"pk": user_id, "name": user_name},
             "key": key,
@@ -327,7 +332,7 @@ def take_snapshot(obj:object, *, comment:str="", user=None, delete:bool=False):
             "diff": fdiff.diff,
             "values": fvals,
             "comment": comment,
-            "comment_html": mdrender(obj.project, comment),
+            "comment_html": mdrender(project, comment),
             "is_hidden": is_hidden,
             "is_snapshot": need_real_snapshot,
         }
